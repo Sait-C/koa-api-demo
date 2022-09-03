@@ -1,5 +1,11 @@
 const koa = require('koa');
+const router = require('./middleware/router');
 const app = new koa();
+
+const logger = require('koa-logger');
+
+//logger
+app.use(logger());
 
 const mongoose = require('mongoose');
 /*
@@ -20,6 +26,10 @@ db.on('error', error => {
     throw new Error(`error connection to db: ${error}`);
 });
 db.once('open', () => console.log('database connected'));
+
+//router
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 //The server either runs on a specified port with the PORT environmental variable, or on the default 3000 port.
 const port = process.env.PORT || 3000;
