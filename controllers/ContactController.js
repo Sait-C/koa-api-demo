@@ -12,5 +12,19 @@ module.exports = {
             status: 'success',
             data: contacts //The data property, which is meant to hold a list of contacts,
         };
+    },
+
+    async store(ctx){
+        // get JSON parameter from request
+        const { body } = ctx.request;
+        // create a Contact model with coming data(thanks to koa-body body parser)
+        let contact = new Contact(body);
+        // save to database
+        contact = await contact.save();
+        // response to user
+        ctx.body = {
+            status: 'success',
+            data: contact
+        }
     }
 };

@@ -7,6 +7,11 @@ const logger = require('koa-logger');
 //logger
 app.use(logger());
 
+const bodyParser = require('koa-body');
+
+//body parser koa-body
+app.use(bodyParser());
+
 const mongoose = require('mongoose');
 /*
 The connect method takes the MongoDB connection URL 
