@@ -1,13 +1,14 @@
 const koa = require('koa');
 const router = require('./middleware/router');
+const logger = require('koa-logger');
+const bodyParser = require('koa-body');
+const validator = require('./middleware/validator');
 const app = new koa();
 
-const logger = require('koa-logger');
 
 //logger
 app.use(logger());
 
-const bodyParser = require('koa-body');
 
 //body parser koa-body
 app.use(bodyParser());
@@ -31,6 +32,9 @@ db.on('error', error => {
     throw new Error(`error connection to db: ${error}`);
 });
 db.once('open', () => console.log('database connected'));
+
+//joi validator
+app.use(validator());
 
 //router
 app.use(router.routes());
